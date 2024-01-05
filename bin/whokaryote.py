@@ -21,7 +21,7 @@ contigs below 5000 is lower.")
 #  parser.add_argument("--log", action='store_true', help="If you want a log file.")
 parser.add_argument("--model", default="T", help="Choose the stand-alone model or the tiara-integrated model: S or T.\
  Option 'T' only works with argument --contigs")
-parser.add_argument("--threads", default="1", help="Number of threads for Tiara to use.")
+parser.add_argument("--threads", default="1", help="Number of threads for Tiara and PProdigal to use.")
 #  @TODO: integrate log file option into code..
 
 args = parser.parse_args()
@@ -73,9 +73,9 @@ if args.contigs:
     if args.gff:
         gene_predictions = args.gff
     else:
-        print("Running prodigal...")
+        print("Running PProdigal...")
         prodigal_start = time.time()
-        run_prodigal(filtered_contigs, args.outdir)
+        run_prodigal(filtered_contigs, args.outdir, args.threads)
         print("Prodigal gene prediction successful. Saving gene coordinate file...")
         gene_predictions = os.path.join(args.outdir, "contigs_genes.gff")
         print("Gene coordinate file saved.")
